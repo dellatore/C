@@ -141,7 +141,7 @@ void modofacil(struct Jogador jogadores[]){
 
 
         } while (parar != 0);
-        int tamanho;
+        int tamanho = 0;
         while (resposta[tamanho] != '\0')
         {
             tamanho++;
@@ -249,7 +249,7 @@ void modomedio(struct Jogador jogadores[]){
 
 
         } while (parar != 0);
-         int tamanho;
+        int tamanho = 0;
         while (resposta[tamanho] != '\0')
         {
             tamanho++;
@@ -369,7 +369,7 @@ void mododificil(struct Jogador jogadores[]){
 
 
         } while (parar != 0);
-        int tamanho;
+        int tamanho = 0;
         while (resposta[tamanho] != '\0')
         {
             tamanho++;
@@ -443,4 +443,5 @@ void mostrardificil(char matriz[][20]){
         printf("\n\n");
     }
 }
+
 
