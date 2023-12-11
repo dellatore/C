@@ -77,7 +77,7 @@ void login(struct Jogador jogadores[]){
     char nome[100];
     printf("Antes de iniciarmos o jogo por favor crie seu usuario:\n");
     printf("digite o nome do jogador:");
-    scanf("%s", &nome);
+    scanf("%[^\n]", nome);
     strcpy(jogadores[0].nome,nome);
     printf("\nPRONTO!AGORA VOCE PODE VOLTAR A JOGAR\n");
 }
@@ -112,14 +112,18 @@ void modofacil(struct Jogador jogadores[]){
     int idLinha,idColuna,continuar;
     char resposta[10];
     int i=0;
+    //condições de parada
     int encontrado = 0;
     int parar = 1;
     printf("\nVoce escolheu o modo facil!!\n");
     printf("neste modo de jogo voce tera que encontrar apenas 3 palavras[gaveta][picole][bolo], boa sorte!\n");
     printf("ATENCAO OS INDICES COMECAM EM 1\n");
     printf("ATENCAO: APERTE 0 PARA SUBMETER A SUA RESPOSTA\n");
-    char matriz[7][9];
+    //incicaliza a matriz 
+    char matriz[7][9]; 
     montarmatrizFacil(matriz);
+
+    //atrbui as respostas a uma string
     char resp1[10] = "gaveta";
     char resp2[10] = "picole";
     char resp3[10] = "bolo";
@@ -142,12 +146,16 @@ void modofacil(struct Jogador jogadores[]){
 
         } while (parar != 0);
         int tamanho = 0;
+
+        //contabiliza o tamamnho da string para atribuir de maneira correta o malloc
         while (resposta[tamanho] != '\0')
         {
             tamanho++;
         }
         
         char *tentativa = (char *)malloc( tamanho* sizeof(char));
+
+        //copia a String letra a letra de acordo com a quantidade de caracteres expressada pela variavel tamanho
         for (int j = 0; j <= tamanho; j++)
         {
             tentativa[j] = resposta[j];
@@ -156,6 +164,8 @@ void modofacil(struct Jogador jogadores[]){
         tentativa[tamanho] = '\0';
 
         i = 0;
+
+        //verifica se as respostas estao certas
         int resultado = ehSubstring(tentativa ,resp1);
         int resultado2 = ehSubstring(tentativa ,resp2);
         int resultado3 = ehSubstring(tentativa ,resp3);
@@ -163,17 +173,17 @@ void modofacil(struct Jogador jogadores[]){
         if (resultado == 0 || resultado2 == 0 || resultado3 == 0)
         {
             printf("PARABENS!!!VOCE ACERTOU UMA PALAVRA!!BUSQUE AS OUTRAS!!\n"); 
-            encontrado ++;
-            free(tentativa);
+            encontrado ++; // caso a função retorne 0 
+            free(tentativa); // libera a memoria alocada
         }else{
             printf("VOCE ERROU!!TENTE NOVAMNETE!\n");
             printf("deseja continuar?[1-nao][0-sim]\n");
             scanf("%d", &continuar);
             if (continuar == 1)
             {
-                menu(jogadores);
+                menu(jogadores); // se o usuario decidir parar a função chama menu()
             }
-            free(tentativa);
+            free(tentativa);// libera a memoria alocada
 
         }
 
@@ -183,7 +193,7 @@ void modofacil(struct Jogador jogadores[]){
     printf("PARABENS!!\n");
     printf("voce completou o modo facil!!\n\n");
     printf("\n\n\n\t\t\t\t\t+10 pts\n\n\n");
-    jogadores[0].pontos += 10;
+    jogadores[0].pontos += 10;// sistema de pontuação do jogo
     
     menu(jogadores);
 
@@ -192,11 +202,11 @@ void modofacil(struct Jogador jogadores[]){
 
 
 void montarmatrizFacil(char matriz[][9]){
-    char caracteres[100] = "gavetaqwetypodqhasfrjnavezxpicoleklbolostapcfiligqpavzxasawhu";
+    char caracteres[100] = "gavetaqwetypodqhasfrjnavezxpicoleklbolostapcfiligqpavzxasawhu"; //aloca o caça-palavaras a uma string
     int k = 0;
     for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 9; j++) {
-            matriz[i][j] = caracteres[k++];
+            matriz[i][j] = caracteres[k++]; //atribui cada caractere a sua posição no caça-palavras
         }
     }
 }
@@ -227,11 +237,13 @@ void modomedio(struct Jogador jogadores[]){
     printf("neste modo voce deve achar 4 palavras com 3 tentativas[loucas][cacarola][vidros][freezer]\n");
     char matriz[12][12];
     montarmatrizMedio(matriz);//monta o caca-palavras
+
     //atribui as respostas do caça-palavras a um vetor
     char resp1[10] = "loucas"; 
     char resp2[10] = "cacarola";
     char resp3[10] = "vidros";
     char resp4[10] = "freezer";
+
     while (encontrado != 4)
     {
         do
@@ -249,6 +261,8 @@ void modomedio(struct Jogador jogadores[]){
 
 
         } while (parar != 0);
+        
+        //contabiliza o tamamnho da string para atribuir de maneira correta o malloc
         int tamanho = 0;
         while (resposta[tamanho] != '\0')
         {
@@ -256,6 +270,7 @@ void modomedio(struct Jogador jogadores[]){
         }
         
         char *tentativa = (char *)malloc( tamanho* sizeof(char));
+        //copia a String letra a letra de acordo com a quantidade de caracteres expressada pela variavel tamanho
         for (int j = 0; j <= tamanho; j++)
         {
             tentativa[j] = resposta[j];
@@ -337,9 +352,9 @@ void mododificil(struct Jogador jogadores[]){
     printf("\t\t BOA SORTE!\n");
 
 
-
+    //monta o caca-palavras
     char matriz[20][20];
-    montarmatrizDificil(matriz);//monta o caca-palavras
+    montarmatrizDificil(matriz);
 
     //atribui as respostas do caça-palavras a um vetor
     char resp1[20] = "valores"; 
@@ -369,6 +384,8 @@ void mododificil(struct Jogador jogadores[]){
 
 
         } while (parar != 0);
+
+        //contabiliza o tamamnho da string para atribuir de maneira correta o malloc
         int tamanho = 0;
         while (resposta[tamanho] != '\0')
         {
@@ -376,6 +393,8 @@ void mododificil(struct Jogador jogadores[]){
         }
         
         char *tentativa = (char *)malloc( tamanho* sizeof(char));
+
+        //copia a String letra a letra de acordo com a quantidade de caracteres expressada pela variavel tamanho
         for (int j = 0; j <= tamanho; j++)
         {
             tentativa[j] = resposta[j];
@@ -387,10 +406,10 @@ void mododificil(struct Jogador jogadores[]){
         int resultado2 = ehSubstring(tentativa,resp2);
         int resultado3 = ehSubstring(tentativa,resp3);
         int resultado4 = ehSubstring(tentativa,resp4);
-        int resultado5 = ehSubstring(tentativa,resp1);
-        int resultado6 = ehSubstring(tentativa,resp2);
-        int resultado7 = ehSubstring(tentativa,resp3);
-        int resultado8 = ehSubstring(tentativa,resp4);
+        int resultado5 = ehSubstring(tentativa,resp5);
+        int resultado6 = ehSubstring(tentativa,resp6);
+        int resultado7 = ehSubstring(tentativa,resp7);
+        int resultado8 = ehSubstring(tentativa,resp8);
         int resultado9 = ehSubstring(tentativa,resp9);
 
 
@@ -398,7 +417,7 @@ void mododificil(struct Jogador jogadores[]){
         {
             printf("PARABENS!!!VOCE ACERTOU UMA PALAVRA!!BUSQUE AS OUTRAS!!\n"); 
             encontrado ++;
-            free(tentativa);
+            free(tentativa);// libera a memoria alocada
         }else{
             printf("deseja continuar?[1-nao][0-sim]\n");
             scanf("%d", &continuar);
@@ -406,7 +425,7 @@ void mododificil(struct Jogador jogadores[]){
             {
                 menu(jogadores);
             }
-            free(tentativa);
+            free(tentativa);// libera a memoria alocada
         }
 
        
@@ -443,5 +462,6 @@ void mostrardificil(char matriz[][20]){
         printf("\n\n");
     }
 }
+
 
 
