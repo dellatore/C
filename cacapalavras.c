@@ -123,7 +123,7 @@ void modofacil(struct Jogador jogadores[]){
     char resp1[10] = "gaveta";
     char resp2[10] = "picole";
     char resp3[10] = "bolo";
-    while (encontrado <= 3)
+    while (encontrado != 3)
     {
         do
         {
